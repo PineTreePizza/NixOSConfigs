@@ -24,7 +24,8 @@
   #boot.loader.systemd-boot.enable = true;  
 
   networking.hostName = "Ping"; # Define your hostname.
-  networking.wireless.enable = lib.mkForce false;  # Enables wireless support via wpa_supplicant.
+  networking.wireless.enable =
+    lib.mkForce false; # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -176,7 +177,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
+  qt.platformTheme = "gnome";
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -187,8 +188,8 @@
     emacs29-pgtk
     dconf2nix
     gnome.zenity
-    kitty
-    kitty-img
+    #kitty
+    #kitty-img
     pavucontrol
     gnome.gnome-tweaks
     #picom-allusive
@@ -215,9 +216,13 @@
     #xfce.thunar-volman
     #xfce.thunar-archive-plugin
     zip
+    flatpak
+    shfmt
+    gnome.gnome-software
     gcc
     libgcc
     libgccjit
+    easyeffects
     gzip
     gimp-with-plugins
     krita
@@ -230,11 +235,11 @@
     dropbox
     github-desktop
     discord
+    contrast
     #peazip
     (pkgs.callPackage ./pantum.nix
       { }) # Hacky printer package, might break in the future.
-    (pkgs.callPackage ./wallpapers.nix
-      { })
+    (pkgs.callPackage ./wallpapers.nix { })
     nixfmt
     #plymouth
     #xfce.tumbler
@@ -244,11 +249,13 @@
     #layan-gtk-thxeme
     ripgrep
     ripgrep-all
+    babelfish
     git
     libgtop
     steam-run
     emacs-all-the-icons-fonts
   ];
+  services.flatpak.enable = true;
   programs.java.enable = true;
   programs.steam = { enable = true; };
   hardware.opengl = {
@@ -316,7 +323,30 @@
 
   #  services.emacs.enable = true;
   #  services.emacs.defaultEditor = true;
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    useBabelfish = true;
+    shellAbbrs = { nxr = "sudo nixos-rebuild switch"; };
+    shellInit = ''
+      if status is-interactive
+          # Commands to run in interactive sessions can go here
+      end
+      function fish_prompt
+          set -l textcol  '#FAFAFA'
+          set -l bgcol    '#00aaff'
+          set -l arrowcol '#00aaff'
+          set_color $arrowcol -b normal
+      		echo -n "╭"
+          set_color $textcol -b $bgcol
+          echo -n "󰌢  "(hostname)"@"(pwd)" "
+          set_color $arrowcol -b normal
+          echo -n " 
+      ╰── "
+      end
+
+      set fish_greeting
+    '';
+  };
   users.defaultUserShell = pkgs.fish;
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

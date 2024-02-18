@@ -21,8 +21,10 @@
       size = 24;
     };
     theme = {
-      name = "Colloid-Light";
-      package = pkgs.colloid-gtk-theme;
+      #name = "Flat-Remix-GTK-Blue-Light-Solid";
+      #package = pkgs.flat-remix-gtk;
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3";
     };
     gtk3.extraConfig = {
       Settings = ''
@@ -36,21 +38,20 @@
       '';
     };
   };
-  home.packages = with pkgs; [
-    gnomeExtensions.user-themes
-    colloid-gtk-theme
-  ];
+  home.packages = with pkgs; [ gnomeExtensions.user-themes colloid-gtk-theme ];
   dconf.settings = {
     "org/gnome/shell" = {
       disable-user-extensions = false;
-      favorite-apps =
-        [ "firefox.desktop" "emacs.desktop" "com.raggesilver.BlackBox.desktop" "org.gnome.Nautilus.desktop" ];
+      favorite-apps = [
+        "firefox.desktop"
+        "emacs.desktop"
+        "com.raggesilver.BlackBox.desktop"
+        "org.gnome.Nautilus.desktop"
+      ];
     };
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Colloid-Light";
-    };
+    "org/gnome/shell/extensions/user-theme" = { name = "Colloid-Light"; };
     "org/gnome/desktop/interface" = {
-      color-scheme = "default";
+      color-scheme = "prefer-light";
       enable-hot-corners = true;
     };
     "org/gnome/desktop/wm/preferences" = { workspace-names = [ "Main" ]; };
