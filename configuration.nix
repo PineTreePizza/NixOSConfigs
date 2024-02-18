@@ -248,9 +248,11 @@
     #flat-remix-icon-theme
     #layan-gtk-thxeme
     ripgrep
+    gitFull
+    transmission_4-gtk
+    gitg
     ripgrep-all
     babelfish
-    git
     libgtop
     steam-run
     emacs-all-the-icons-fonts

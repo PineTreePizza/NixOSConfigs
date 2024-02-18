@@ -47,6 +47,15 @@
         "emacs.desktop"
         "com.raggesilver.BlackBox.desktop"
         "org.gnome.Nautilus.desktop"
+        "github-desktop.desktop"
+        "org.gnome.gitg.desktop"
+        "discord.desktop"
+        "steam.desktop"
+        "gnome-system-monitor.desktop"
+        "org.gnome.design.Contrast.desktop"
+        "gimp.desktop"
+        "org.telegram.desktop.desktop"
+        "org.gnome.Settings.desktop"
       ];
     };
     "org/gnome/shell/extensions/user-theme" = { name = "Colloid-Light"; };
