@@ -45,6 +45,7 @@
       favorite-apps = [
         "firefox.desktop"
         "emacs.desktop"
+        "code.desktop"
         "com.raggesilver.BlackBox.desktop"
         "org.gnome.Nautilus.desktop"
         "github-desktop.desktop"
@@ -55,10 +56,11 @@
         "org.gnome.design.Contrast.desktop"
         "gimp.desktop"
         "org.telegram.desktop.desktop"
+        "com.mattjakeman.ExtensionManager.desktop"
         "org.gnome.Settings.desktop"
       ];
     };
-    "org/gnome/shell/extensions/user-theme" = { name = "Colloid-Light"; };
+    "org/gnome/shell/extensions/user-theme" = { name = "vimix-light-doder"; };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-light";
       enable-hot-corners = true;

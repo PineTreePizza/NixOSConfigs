@@ -107,7 +107,7 @@
       desktopManager.gnome.enable = true;
     };
   };
-
+  services.gnome.gnome-keyring.enable = true;
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -167,6 +167,7 @@
     FOREGROUND_COLOR = "020202";
     BACKGROUND_ALT_COLOR = "e4eaeb";
     ACCENT_COLOR = "00aaff";
+    NIXOS_OZONE_WL = "1";
   };
 
   nix.gc = {
@@ -251,6 +252,7 @@
     gitFull
     transmission_4-gtk
     gitg
+    vscode-fhs
     ripgrep-all
     babelfish
     libgtop
@@ -325,6 +327,7 @@
 
   #  services.emacs.enable = true;
   #  services.emacs.defaultEditor = true;
+
   programs.fish = {
     enable = true;
     useBabelfish = true;
