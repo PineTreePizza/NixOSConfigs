@@ -3,7 +3,7 @@
 My configs from /etc/nixos
 To use you can run the following on NixOS.
 
-**NOTE**: Be sure to change *"home-manager.users.pong"* to **"home-manager.users.yourUsername"
+**NOTE**: Be sure to change *"home-manager.users.pong"* to **"home-manager.users.yourUsername"**
 
 ```
 nix-shell -p git
