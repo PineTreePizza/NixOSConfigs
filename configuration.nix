@@ -146,7 +146,7 @@
   users.users.pong = {
     isNormalUser = true;
     description = "Ping";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       noto-fonts
       noto-fonts-emoji
@@ -173,7 +173,7 @@
   nix.gc = {
     automatic = true;
     randomizedDelaySec = "14m";
-    options = "--delete-older-than 10d";
+    options = "--delete-older-than 2d";
   };
 
   # Allow unfree packages
@@ -203,6 +203,19 @@
     lua-language-server
     binutils
     gnumake
+    wget
+    go
+    php83Packages.composer
+    emblem
+    SDL
+    SDL2
+    php83
+    wl-clipboard
+    cargo
+    luajitPackages.luarocks
+    julia_19
+    python3
+    python311Packages.pip
     #pantum-driver
     gnome-extension-manager
     blackbox-terminal
@@ -228,7 +241,7 @@
     gimp-with-plugins
     krita
     unzip
-    #mate.engrampa
+    nodejs_21
     findutils
     clang-tools
     maestral
@@ -237,6 +250,9 @@
     github-desktop
     discord
     contrast
+    neovide
+    docker
+    neovim
     #peazip
     (pkgs.callPackage ./pantum.nix
       { }) # Hacky printer package, might break in the future.
@@ -250,9 +266,11 @@
     #layan-gtk-thxeme
     ripgrep
     gitFull
+    lite-xl
     transmission_4-gtk
     gitg
-    vscode-fhs
+    # vscode-fhs
+    vscode
     ripgrep-all
     babelfish
     libgtop
@@ -279,6 +297,8 @@
       hitori # sudoku game
       atomix # puzzle game
     ]);
+
+  virtualisation.docker.enable = true;
 
   services.locate = {
     enable = true;
@@ -321,12 +341,12 @@
   #     text = ''
   #       rm -r /home/$USER/.config/gtk-*
   #     '';
-  #     deps = [];
+  #     deps = [ ];
   #   };
-  # };    
+  # };
 
-  #  services.emacs.enable = true;
-  #  services.emacs.defaultEditor = true;
+  # services.emacs.enable = true;
+  # services.emacs.defaultEditor = true;
 
   programs.fish = {
     enable = true;

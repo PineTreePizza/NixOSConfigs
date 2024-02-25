@@ -12,7 +12,7 @@
   gtk = {
     enable = true;
     iconTheme = {
-      name = "Papirus-Light";
+      name = "Papirus";
       package = pkgs.papirus-icon-theme;
     };
     cursorTheme = {
@@ -60,7 +60,7 @@
         "org.gnome.Settings.desktop"
       ];
     };
-    "org/gnome/shell/extensions/user-theme" = { name = "vimix-light-doder"; };
+    "org/gnome/shell/extensions/user-theme" = { name = "Colloid"; };
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-light";
       enable-hot-corners = true;

@@ -159,8 +159,8 @@ in {
 
         "org/gnome/shell/extensions/blur-my-shell/panel" = {
           blur = true;
-          brightness = 1.0;
-          color = [ (1.0) (1.0) (1.0) (1.0) ];
+          brightness = 0.3;
+          # color = [ (1.0) (1.0) (1.0) (1.0) ];
           customize = true;
           noise-amount = 0.0;
           noise-lightness = 0.0;
