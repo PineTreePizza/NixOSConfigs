@@ -93,21 +93,36 @@
   #   backend = "glx";
   # };
 
-  services = {
-    udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
-    xserver = {
+  # services = {
+  #   udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+  #   xserver = {
+  #     enable = true;
+  #     displayManager = {
+  #       defaultSession = "gnome";
+  #       gdm = {
+  #         enable = true;
+  #         wayland = true;
+  #       };
+  #     };
+  #     desktopManager.gnome.enable = true;
+  #   };
+  # };
+  # services.gnome.gnome-keyring.enable = true;
+
+  services.xserver = {
+    enable = true;
+    displayManager.sddm={
       enable = true;
-      displayManager = {
-        defaultSession = "gnome";
-        gdm = {
-          enable = true;
-          wayland = true;
-        };
-      };
-      desktopManager.gnome.enable = true;
+      wayland.enable = true;
     };
+    desktopManager.plasma6.enable = true;
+    displayManager.defaultSession = "plasma";
   };
-  services.gnome.gnome-keyring.enable = true;
+
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+  system.autoUpgrade.channel = "https://channels.nixos.org/nixos-unstable";
+
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -137,9 +152,9 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us,ru";
-    xkbVariant = "";
-    xkbOptions = "grp:alt_shift_toggle";
+    xkb.layout = "us,ru";
+    xkb.variant = "";
+    xkb.options = "grp:alt_shift_toggle";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -147,15 +162,7 @@
     isNormalUser = true;
     description = "Ping";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-emoji
-      cascadia-code
-      noto-fonts-cjk
-      nerdfonts
-      corefonts
-      vistafonts
-    ];
+    packages = with pkgs; [ ];
   };
 
   environment.variables = {
@@ -178,46 +185,58 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  qt.platformTheme = "gnome";
+  qt.platformTheme = "kde";
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     firefox
     fish
     steam
-    onlyoffice-bin_7_5
+    onlyoffice-bin_latest
+    thunderbird
     emacs29-pgtk
     dconf2nix
+    kaffeine
+    kdePackages.yakuake
     gnome.zenity
     #kitty
     #kitty-img
     pavucontrol
     gnome.gnome-tweaks
     #picom-allusive
-    gparted
+    #gparted
+    #mozillavpn
     cmake
     wpsoffice
     whatsapp-for-linux
     telegram-desktop
+    #dos2unix
+    wineWowPackages.waylandFull
     nitch
     lua-language-server
+    #pkgs.libsForQt5.bismuth
     binutils
     gnumake
     wget
     go
-    php83Packages.composer
+    timeshift
     emblem
+    python311Packages.jedi-language-server
+    libsForQt5.qtstyleplugin-kvantum
     SDL
+    protonvpn-gui
+    flameshot
     SDL2
     php83
     wl-clipboard
     cargo
-    luajitPackages.luarocks
-    julia_19
+    partition-manager
+    #luajitPackages.luarocks
+    #julia_19
     python3
     python311Packages.pip
     #pantum-driver
-    gnome-extension-manager
+    #gnome-extension-manager
     blackbox-terminal
     nodePackages.lua-fmt
     vimix-gtk-themes
@@ -240,6 +259,7 @@
     gzip
     gimp-with-plugins
     krita
+    android-tools
     unzip
     nodejs_21
     findutils
@@ -257,6 +277,7 @@
     (pkgs.callPackage ./pantum.nix
       { }) # Hacky printer package, might break in the future.
     (pkgs.callPackage ./wallpapers.nix { })
+    elegant-sddm
     nixfmt
     #plymouth
     #xfce.tumbler
@@ -266,15 +287,22 @@
     #layan-gtk-thxeme
     ripgrep
     gitFull
-    lite-xl
-    transmission_4-gtk
+    kitty
+    #lite-xl
+    transmission_4-qt
     gitg
     # vscode-fhs
     vscode
     ripgrep-all
     babelfish
+    kdevelop
+    plasma-browser-integration
+    starship
     libgtop
+    android-studio
     steam-run
+    zulu
+    drawio
     emacs-all-the-icons-fonts
   ];
   services.flatpak.enable = true;
@@ -284,21 +312,10 @@
     driSupport = true;
     driSupport32Bit = true;
   };
-  environment.gnome.excludePackages = (with pkgs; [ gnome-photos gnome-tour ])
-    ++ (with pkgs.gnome; [
-      cheese # webcam tool
-      gnome-music
-      gedit # text editor
-      epiphany # web browser
-      evince # document viewer
-      gnome-characters
-      tali # poker game
-      iagno # go game
-      hitori # sudoku game
-      atomix # puzzle game
-    ]);
 
   virtualisation.docker.enable = true;
+
+  programs.adb.enable = true;
 
   services.locate = {
     enable = true;
@@ -315,6 +332,7 @@
   #        ln -s /bin/sh /bin/bash
   #   '';
   # };
+
   boot.plymouth = {
     enable = true;
     themePackages = [
@@ -365,14 +383,16 @@
           set_color $textcol -b $bgcol
           echo -n "󰌢  "(hostname)"@"(pwd)" "
           set_color $arrowcol -b normal
-          echo -n " 
+          echo -n "
       ╰── "
       end
 
       set fish_greeting
+      starship init fish | source
     '';
   };
   users.defaultUserShell = pkgs.fish;
+  boot.supportedFilesystems = [ "ntfs" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -390,7 +410,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  #networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
