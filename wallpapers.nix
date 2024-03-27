@@ -4,7 +4,7 @@ pkgs.stdenv.mkDerivation {
   name = "wallpapers";
   src = pkgs.fetchgit {
     url = "https://github.com/PineTreePizza/WallpapersNix";
-    sha256 = "sha256-cjb2bClHB08yJRDgwf823AeF0joZUuq3zF/ANI5Mcs0=";
+    sha256 = "sha256-0r0q1y6CBdnLfSgyOrdzbP+nVz9ufIzXeNbgaDJvTBs=";
   };
   installPhase = ''
     mkdir -p $out/share/wallpapers

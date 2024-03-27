@@ -24,7 +24,6 @@ in {
         gnomeExtensions.just-perfection
         gnomeExtensions.easyeffects-preset-selector
         gnomeExtensions.tophat
-        paper-gtk-theme
       ];
 
       dconf.settings = {
@@ -50,11 +49,6 @@ in {
             "pano@elhan.io"
             "eepresetselector@ulville.github.io"
           ];
-        };
-
-        "org/gnome/shell/extensions/blur-my-shell" = {
-          color-and-noise = true;
-          noise-lightness = 0.0;
         };
 
         "org/gnome/desktop/wm/keybindings" = {
@@ -102,6 +96,16 @@ in {
           unmaximize = [ ];
 
         };
+
+    "org/gnome/desktop/peripherals/touchpad" = {
+      click-method = "areas";
+      natural-scroll = false;
+      two-finger-scrolling-enabled = true;
+    };
+
+
+        "org/gnome/shell/extensions/lockkeys" = { style = "capslock"; };
+
         "org/gnome/shell/extensions/tiling-assistant" = {
           active-window-hint = 1;
           default-move-mode = 1;
